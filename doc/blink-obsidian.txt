@@ -17,6 +17,30 @@ general YAML parsing.
 ==============================================================================
 INSTALLATION                                          *blink-obsidian-install*
 
+With native Neovim 0.12+ package manager: >lua
+  vim.pack.add({
+    "https://github.com/Saghen/blink.cmp",
+    "https://github.com/kyleqbnguyen/blink-obsidian",
+  })
+
+  require("blink.cmp").setup({
+    sources = {
+      default = { "lsp", "path", "buffer", "obsidian" },
+      providers = {
+        obsidian = {
+          name = "Obsidian",
+          module = "blink_obsidian",
+          score_offset = 12,
+        },
+      },
+    },
+  })
+<
+
+Restart Nvim, then run: >vim
+  :lua vim.pack.update()
+<
+
 With lazy.nvim: >lua
   {
     "Saghen/blink.cmp",

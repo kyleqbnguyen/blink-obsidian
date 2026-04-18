@@ -30,6 +30,30 @@ See also `:h blink-obsidian`.
 
 ## Install
 
+### Native Neovim 0.12+ package manager
+
+```lua
+vim.pack.add({
+  "https://github.com/Saghen/blink.cmp",
+  "https://github.com/kyleqbnguyen/blink-obsidian",
+})
+
+require("blink.cmp").setup({
+  sources = {
+    default = { "lsp", "path", "buffer", "obsidian" },
+    providers = {
+      obsidian = {
+        name = "Obsidian",
+        module = "blink_obsidian",
+        score_offset = 12,
+      },
+    },
+  },
+})
+```
+
+After adding plugin specs, restart Neovim and run `:lua vim.pack.update()` to install or update managed plugins.
+
 ### lazy.nvim
 
 ```lua
