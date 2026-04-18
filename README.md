@@ -9,8 +9,7 @@ Scope stays intentionally small:
 - `#tags`
 - frontmatter `tags` completion
 
-Not trying to be a full Obsidian integration layer. No markdown link completion,
-aliases, or general YAML parsing.
+Not trying to be a full Obsidian integration layer.
 
 See also `:h blink-obsidian`.
 
