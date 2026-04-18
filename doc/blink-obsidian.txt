@@ -1,0 +1,100 @@
+*blink-obsidian.txt*      Small blink.cmp source for Obsidian markdown
+
+==============================================================================
+blink-obsidian                                        *blink-obsidian*
+
+Small blink.cmp source for Obsidian-style markdown vaults.
+
+Scope stays narrow:
+
+- `[[wiki links]]`
+- `#tags`
+- frontmatter `tags` completion
+
+Not full Obsidian integration. No markdown link completion, aliases, or
+general YAML parsing.
+
+==============================================================================
+INSTALLATION                                          *blink-obsidian-install*
+
+With lazy.nvim: >lua
+  {
+    "Saghen/blink.cmp",
+    dependencies = {
+      "kyleqbnguyen/blink-obsidian",
+    },
+    opts = {
+      sources = {
+        default = { "lsp", "path", "buffer", "obsidian" },
+        providers = {
+          obsidian = {
+            name = "Obsidian",
+            module = "blink_obsidian",
+            score_offset = 12,
+          },
+        },
+      },
+    },
+  }
+<
+
+Point Blink directly at module `blink_obsidian`. No `setup()` function.
+
+==============================================================================
+CONFIGURATION                                         *blink-obsidian-config*
+
+Minimal provider config: >lua
+  obsidian = {
+    name = "Obsidian",
+    module = "blink_obsidian",
+    score_offset = 12,
+  }
+<
+
+Provider options go through `opts`: >lua
+  obsidian = {
+    name = "Obsidian",
+    module = "blink_obsidian",
+    opts = {
+      close_wiki = true,
+    },
+  }
+<
+
+Options:
+
+`close_wiki`  Append `]]` when completing inside `[[...` and closing brackets
+              are not already present after cursor. Default: `true`.
+
+==============================================================================
+FEATURES                                              *blink-obsidian-features*
+
+- Enables only for `markdown` buffers.
+- Detects vault root from nearest parent directory containing `.obsidian/`.
+- Completes `[[wiki links]]` from `**/*.md` note names in that vault.
+- When duplicate note stems exist, inserts vault-relative path without `.md`.
+- Completes inline `#tags` from markdown files in vault.
+- Completes frontmatter `tags` in these forms:
+  `tags: foo`
+  `tags: [foo, bar]`
+  list form under `tags:`
+- Ignores fenced code blocks when scanning inline tags.
+- Invalidates per-vault cache on markdown file write.
+
+==============================================================================
+NOTES                                                 *blink-obsidian-notes*
+
+- Wiki completion triggers inside `[[...`.
+- Inline tag completion triggers after `#`.
+- Frontmatter inline list completion can trigger after `,`.
+- Bare `#` on an otherwise empty line does not auto-popup. This avoids
+  markdown heading noise.
+- Frontmatter parsing is hand-rolled for `tags` only.
+
+==============================================================================
+LICENSE                                               *blink-obsidian-license*
+
+Current repo license: MIT. See `LICENSE`.
+
+==============================================================================
+vim:tw=78:ts=8:noet:ft=help:norl:
