@@ -11,8 +11,7 @@ Scope stays narrow:
 - `#tags`
 - frontmatter `tags` completion
 
-Not full Obsidian integration. No markdown link completion, aliases, or
-general YAML parsing.
+Not full Obsidian integration.
 
 ==============================================================================
 INSTALLATION                                          *blink-obsidian-install*
