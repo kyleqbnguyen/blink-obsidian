@@ -16,31 +16,49 @@ See also `:h blink-obsidian`.
 
 ## Features
 
+- `markdown` only
+- Vault root auto-detected from nearest parent containing `.obsidian/`
+- Duplicate note names fall back to vault-relative paths
+- Fenced code blocks ignored while scanning inline tags
+- Per-vault cache invalidated on markdown file write
 
+### Wiki Links
 
+Completes `[[wiki links]]` from markdown note names in current vault.
 
+<p align="center">
+  <img width="720" alt="Wiki link completion demo" src="https://github.com/user-attachments/assets/16a04578-651d-40ff-bba3-61acf429a0b6" />
+</p>
 
-- Enables only for `markdown` buffers
-- Detects vault root from nearest parent directory containing `.obsidian/`
-- Completes `[[wiki links]]` from `**/*.md` note names in that vault
-<img width="480" height="270" alt="Image" src="https://github.com/user-attachments/assets/16a04578-651d-40ff-bba3-61acf429a0b6" />
+### Inline Tags
 
-- Falls back to vault-relative note paths when duplicate note stems exist
-- Completes `#tags` from inline markdown tags and frontmatter `tags`
-<img width="480" height="270" alt="Image" src="https://github.com/user-attachments/assets/61953b20-5685-415e-8cc2-e5feb2963beb" />
+Completes `#tags` from both inline markdown tags and frontmatter `tags` values.
 
-- Completes frontmatter tags in these forms:
-  - `tags: foo`
-  <img width="480" height="270" alt="Image" src="https://github.com/user-attachments/assets/7eb5028b-43b2-410e-ac8a-a88c9a05e5d3" />
-  
-  - `tags: [foo, bar]`
-  <img width="480" height="270" alt="Image" src="https://github.com/user-attachments/assets/4107c487-6b66-4db4-be68-15772dabc631" />
-  
-  - list form under `tags:`
-  <img width="480" height="270" alt="Image" src="https://github.com/user-attachments/assets/fc44ee72-44bf-4ac4-a6cf-d215fc71e497" />
-  
-- Ignores fenced code blocks when scanning inline tags
-- Invalidates per-vault cache on markdown file write
+<p align="center">
+  <img width="720" alt="Inline tag completion demo" src="https://github.com/user-attachments/assets/61953b20-5685-415e-8cc2-e5feb2963beb" />
+</p>
+
+### Frontmatter Tags
+
+Supports all common `tags` shapes.
+
+`tags: foo`
+
+<p align="center">
+  <img width="720" alt="Scalar frontmatter tag completion demo" src="https://github.com/user-attachments/assets/7eb5028b-43b2-410e-ac8a-a88c9a05e5d3" />
+</p>
+
+`tags: [foo, bar]`
+
+<p align="center">
+  <img width="720" alt="Inline list frontmatter tag completion demo" src="https://github.com/user-attachments/assets/4107c487-6b66-4db4-be68-15772dabc631" />
+</p>
+
+List form under `tags:`
+
+<p align="center">
+  <img width="720" alt="Multiline frontmatter tag completion demo" src="https://github.com/user-attachments/assets/fc44ee72-44bf-4ac4-a6cf-d215fc71e497" />
+</p>
 
 ## Install
 
