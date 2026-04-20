@@ -29,27 +29,9 @@ Completes `[[wiki links]]` from markdown note names in current vault.
   <img width="720" alt="Wiki link completion demo" src="https://github.com/user-attachments/assets/16a04578-651d-40ff-bba3-61acf429a0b6" />
 </p>
 
-### Unresolved Wikilinks
-
-Optionally surface unresolved wikilinks — `[[links]]` that appear in the vault
-but have no corresponding note yet. Useful for workflows where you link to
-topics before the notes exist.
-
-Unresolved wikilinks appear alongside existing notes, marked `(new)`.
-
-<!-- demo gif -->
-
-Enable via `include_unresolved_wiki_links`:
-
-```lua
-obsidian = {
-  name = "Obsidian",
-  module = "blink_obsidian",
-  opts = {
-    include_unresolved_wiki_links = true,
-  },
-}
-```
+Optionally surfaces unresolved wikilinks — `[[links]]` that appear in the vault
+but have no corresponding note yet — marked `(new)`. See
+[`include_unresolved_wiki_links`](#options).
 
 ### Inline Tags
 
@@ -178,6 +160,7 @@ obsidian = {
   module = "blink_obsidian",
   opts = {
     close_wiki = true,
+    include_unresolved_wiki_links = false,
   },
 }
 ```
