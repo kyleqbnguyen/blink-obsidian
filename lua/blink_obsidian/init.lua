@@ -2,7 +2,7 @@ local source = {}
 
 local default_opts = {
   close_wiki = true,
-  include_undefined_refs = false,
+  include_unresolved_wiki_links = false,
 }
 
 local cache = {}
@@ -301,7 +301,7 @@ local function collect_frontmatter_tags(line, state, seen, tags)
   end
 end
 
-local function scan_undefined_refs(root, notes)
+local function scan_unresolved_wiki_links(root, notes)
   local existing = {}
   for _, note in ipairs(notes) do
     existing[note.insert:lower()] = true
@@ -499,11 +499,11 @@ function source:get_completions(ctx, callback)
       items[#items + 1] = build_wiki_item(note, ctx, context, self.opts.close_wiki)
     end
 
-    if self.opts.include_undefined_refs then
-      if not entry.undefined_refs then
-        entry.undefined_refs = scan_undefined_refs(context.root, entry.notes)
+    if self.opts.include_unresolved_wiki_links then
+      if not entry.unresolved_wiki_links then
+        entry.unresolved_wiki_links = scan_unresolved_wiki_links(context.root, entry.notes)
       end
-      for _, ref in ipairs(entry.undefined_refs) do
+      for _, ref in ipairs(entry.unresolved_wiki_links) do
         items[#items + 1] = build_undefined_ref_item(ref, ctx, context, self.opts.close_wiki)
       end
     end

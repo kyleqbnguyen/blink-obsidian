@@ -86,8 +86,14 @@ Provider options go through `opts`: >lua
 
 Options:
 
-`close_wiki`  Append `]]` when completing inside `[[...` and closing brackets
-              are not already present after cursor. Default: `true`.
+`close_wiki`           Append `]]` when completing inside `[[...` and closing
+                       brackets are not already present after cursor.
+                       Default: `true`.
+
+`include_unresolved_wiki_links`  Surface unresolved wikilinks: `[[links]]` that
+                       appear anywhere in the vault but have no corresponding
+                       note. They appear alongside existing notes, marked
+                       `(new)`. Default: `false`.
 
 ==============================================================================
 FEATURES                                              *blink-obsidian-features*
@@ -96,6 +102,7 @@ FEATURES                                              *blink-obsidian-features*
 - Detects vault root from nearest parent directory containing `.obsidian/`.
 - Completes `[[wiki links]]` from `**/*.md` note names in that vault.
 - When duplicate note stems exist, inserts vault-relative path without `.md`.
+- Optionally completes unresolved wikilinks marked `(new)`.
 - Completes inline `#tags` from markdown files in vault.
 - Completes frontmatter `tags` in these forms:
   `tags: foo`
