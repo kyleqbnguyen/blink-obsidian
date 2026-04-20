@@ -2,6 +2,7 @@ local source = {}
 
 local default_opts = {
   close_wiki = true,
+  include_undefined_refs = false,
 }
 
 local cache = {}
@@ -300,6 +301,41 @@ local function collect_frontmatter_tags(line, state, seen, tags)
   end
 end
 
+local function scan_undefined_refs(root, notes)
+  local existing = {}
+  for _, note in ipairs(notes) do
+    existing[note.insert:lower()] = true
+    existing[note.label:lower()] = true
+    if note.description then
+      existing[note.description:lower()] = true
+    end
+  end
+
+  local refs = {}
+  local seen = {}
+
+  for _, path in ipairs(vim.fn.globpath(root, "**/*.md", false, true)) do
+    local ok, lines = pcall(vim.fn.readfile, path)
+    if ok then
+      for _, line in ipairs(lines) do
+        for raw in line:gmatch("%[%[([^%]|]+)") do
+          local target = vim.trim(raw:gsub("#.*$", ""))
+          if target ~= "" and not existing[target:lower()] and not seen[target:lower()] then
+            seen[target:lower()] = true
+            refs[#refs + 1] = target
+          end
+        end
+      end
+    end
+  end
+
+  table.sort(refs, function(a, b)
+    return a:lower() < b:lower()
+  end)
+
+  return refs
+end
+
 local function scan_tags(root)
   local tags = {}
   local seen = {}
@@ -385,6 +421,27 @@ local function build_wiki_item(note, ctx, context, close_wiki)
   }
 end
 
+local function build_undefined_ref_item(ref, ctx, context, close_wiki)
+  local after_cursor = ctx.line:sub(ctx.cursor[2] + 1)
+  local suffix = close_wiki and not after_cursor:match("^%]%]") and "]]" or ""
+  local new_text = ref .. suffix
+
+  return {
+    label = ref,
+    label_description = "(new)",
+    insertText = new_text,
+    filterText = ref,
+    kind = require("blink.cmp.types").CompletionItemKind.Reference,
+    textEdit = {
+      newText = new_text,
+      range = {
+        start = { line = ctx.cursor[1] - 1, character = context.start_col },
+        ["end"] = { line = ctx.cursor[1] - 1, character = ctx.cursor[2] },
+      },
+    },
+  }
+end
+
 local function build_tag_item(tag, ctx, context)
   local in_frontmatter = context.kind == "frontmatter_tag"
   local new_text = in_frontmatter and tag or "#" .. tag
@@ -440,6 +497,15 @@ function source:get_completions(ctx, callback)
 
     for _, note in ipairs(entry.notes) do
       items[#items + 1] = build_wiki_item(note, ctx, context, self.opts.close_wiki)
+    end
+
+    if self.opts.include_undefined_refs then
+      if not entry.undefined_refs then
+        entry.undefined_refs = scan_undefined_refs(context.root, entry.notes)
+      end
+      for _, ref in ipairs(entry.undefined_refs) do
+        items[#items + 1] = build_undefined_ref_item(ref, ctx, context, self.opts.close_wiki)
+      end
     end
   else
     if not entry.tags then
