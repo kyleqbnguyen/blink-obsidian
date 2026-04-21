@@ -423,7 +423,6 @@ local function build_undefined_ref_item(ref, ctx, context)
 
   return {
     label = ref,
-    label_description = "(new)",
     insertText = new_text,
     filterText = ref,
     kind = require("blink.cmp.types").CompletionItemKind.Reference,

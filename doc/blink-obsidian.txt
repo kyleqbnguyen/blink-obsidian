@@ -88,8 +88,7 @@ Options:
 
 `include_unresolved_wiki_links`  Surface unresolved wikilinks: `[[links]]` that
                        appear anywhere in the vault but have no corresponding
-                       note. They appear alongside existing notes, marked
-                       `(new)`. Default: `false`.
+                       note. Default: `false`.
 
 ==============================================================================
 FEATURES                                              *blink-obsidian-features*
@@ -98,7 +97,7 @@ FEATURES                                              *blink-obsidian-features*
 - Detects vault root from nearest parent directory containing `.obsidian/`.
 - Completes `[[wiki links]]` from `**/*.md` note names in that vault.
 - When duplicate note stems exist, inserts vault-relative path without `.md`.
-- Optionally completes unresolved wikilinks marked `(new)`.
+- Optionally completes unresolved wikilinks.
 - Completes inline `#tags` from markdown files in vault.
 - Completes frontmatter `tags` in these forms:
   `tags: foo`

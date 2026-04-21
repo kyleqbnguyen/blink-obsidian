@@ -30,7 +30,7 @@ Completes `[[wiki links]]` from markdown note names in current vault.
 </p>
 
 Optionally surfaces unresolved wikilinks — `[[links]]` that appear in the vault
-but have no corresponding note yet — marked `(new)`. See
+but have no corresponding note yet. See
 [`include_unresolved_wiki_links`](#options).
 
 ### Inline Tags
@@ -168,7 +168,7 @@ Available options:
 
 - `include_unresolved_wiki_links` (`false` by default): include unresolved
   wikilinks — `[[links]]` that appear anywhere in the vault but have no
-  corresponding note. These appear marked `(new)` in the completion menu.
+  corresponding note.
 
 ## Notes
 
