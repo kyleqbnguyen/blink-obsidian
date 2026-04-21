@@ -159,7 +159,6 @@ obsidian = {
   name = "Obsidian",
   module = "blink_obsidian",
   opts = {
-    close_wiki = true,
     include_unresolved_wiki_links = false,
   },
 }
@@ -167,8 +166,6 @@ obsidian = {
 
 Available options:
 
-- `close_wiki` (`true` by default): append `]]` when completing inside an open
-  `[[...` link and closing brackets are not already present after cursor.
 - `include_unresolved_wiki_links` (`false` by default): include unresolved
   wikilinks — `[[links]]` that appear anywhere in the vault but have no
   corresponding note. These appear marked `(new)` in the completion menu.

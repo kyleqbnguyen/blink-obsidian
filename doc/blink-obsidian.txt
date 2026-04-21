@@ -79,16 +79,12 @@ Provider options go through `opts`: >lua
     name = "Obsidian",
     module = "blink_obsidian",
     opts = {
-      close_wiki = true,
+      include_unresolved_wiki_links = false,
     },
   }
 <
 
 Options:
-
-`close_wiki`           Append `]]` when completing inside `[[...` and closing
-                       brackets are not already present after cursor.
-                       Default: `true`.
 
 `include_unresolved_wiki_links`  Surface unresolved wikilinks: `[[links]]` that
                        appear anywhere in the vault but have no corresponding

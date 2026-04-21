@@ -1,7 +1,6 @@
 local source = {}
 
 local default_opts = {
-  close_wiki = true,
   include_unresolved_wiki_links = false,
 }
 
@@ -400,10 +399,8 @@ local function register_autocmd()
   })
 end
 
-local function build_wiki_item(note, ctx, context, close_wiki)
-  local after_cursor = ctx.line:sub(ctx.cursor[2] + 1)
-  local suffix = close_wiki and not after_cursor:match("^%]%]") and "]]" or ""
-  local new_text = note.insert .. suffix
+local function build_wiki_item(note, ctx, context)
+  local new_text = note.insert
 
   return {
     label = note.label,
@@ -421,10 +418,8 @@ local function build_wiki_item(note, ctx, context, close_wiki)
   }
 end
 
-local function build_undefined_ref_item(ref, ctx, context, close_wiki)
-  local after_cursor = ctx.line:sub(ctx.cursor[2] + 1)
-  local suffix = close_wiki and not after_cursor:match("^%]%]") and "]]" or ""
-  local new_text = ref .. suffix
+local function build_undefined_ref_item(ref, ctx, context)
+  local new_text = ref
 
   return {
     label = ref,
@@ -496,7 +491,7 @@ function source:get_completions(ctx, callback)
     end
 
     for _, note in ipairs(entry.notes) do
-      items[#items + 1] = build_wiki_item(note, ctx, context, self.opts.close_wiki)
+      items[#items + 1] = build_wiki_item(note, ctx, context)
     end
 
     if self.opts.include_unresolved_wiki_links then
@@ -504,7 +499,7 @@ function source:get_completions(ctx, callback)
         entry.unresolved_wiki_links = scan_unresolved_wiki_links(context.root, entry.notes)
       end
       for _, ref in ipairs(entry.unresolved_wiki_links) do
-        items[#items + 1] = build_undefined_ref_item(ref, ctx, context, self.opts.close_wiki)
+        items[#items + 1] = build_undefined_ref_item(ref, ctx, context)
       end
     end
   else
